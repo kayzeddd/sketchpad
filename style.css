@@ -1,9 +1,29 @@
+html {
+    background-color: rgba(15, 235, 239, 0.826);
+}
 
+.bodyItems{
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
 
-.boxBorder {
+.containerBorder {
+    display:grid;
+    align-self: center;
+    justify-content: center;
+    align-content: center;
+    margin-top: 40px;
+    background-color: white;
     border: 1px solid blue;
 }
 
-.boxBorder:hover {
-    background-color: rgb(29, 173, 125);
+.bgColorChange {
+    background-color: rgb(186, 72, 72);
+}
+
+.buttonDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
