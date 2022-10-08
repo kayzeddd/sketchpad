@@ -1,5 +1,5 @@
 html {
-    background-color: rgba(15, 235, 239, 0.826);
+    background-color: rgba(134, 96, 96, 0.826);
 }
 
 .bodyItems{
@@ -8,14 +8,13 @@ html {
     height: 90vh;
 }
 
-.containerBorder {
+.containerCss {
     display:grid;
     align-self: center;
     justify-content: center;
     align-content: center;
     margin-top: 40px;
     background-color: white;
-    border: 1px solid blue;
 }
 
 .bgColorChange {
@@ -26,4 +25,5 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 20px;
 }
