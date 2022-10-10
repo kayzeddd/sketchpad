@@ -21,7 +21,7 @@ const askUserBtn = document.querySelector(".buttonStyle")
 askUserBtn.addEventListener('click', (e) => userPrompt());
 
 function userPrompt() {
-    let dimensions = prompt("How many squares per side? \n min:50 | max:120", 100);
+    let dimensions = prompt("Enter Canvas Size \n min:50 | max:120", 100);
     if (dimensions == null){return}
     if (document.contains(document.querySelector(".containerCss"))){
         body.removeChild(document.querySelector(".containerCss"));
@@ -31,7 +31,7 @@ function userPrompt() {
         containerSize(dimensions, 8, dimensions, 8);        
     }
     else {
-        alert("10 or more and 100 or less")
+        alert("50 or more and 120 or less")
     }
 }
 

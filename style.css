@@ -1,5 +1,8 @@
 html {
-    background-color: rgba(134, 96, 96, 0.826);
+    background-image: url(./images/painting-background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
 }
 
 .bodyItems{
@@ -13,7 +16,8 @@ html {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    column-gap: 100px;;
+    margin-bottom: -20px;
+    column-gap: 100px;
 }
 
 .containerCss {
@@ -26,10 +30,33 @@ html {
     border: 40px solid transparent;
     padding: 0px;
     border-image: url(./images/frame.jpg) 100 stretch;
+    cursor: crosshair;
+}
+
+.eraserBtn {
+    width: 125px;
+    height: auto; 
+    cursor: pointer;
+}
+
+.eraserBtn:active {
+    transform: translateY(4px)
 }
 
 .eraser {
     background-color: white;
+}
+
+.colorPicker {
+    width: 210px;
+    height: auto;
+    cursor: pointer;
+    margin-top: -25px;
+    margin-bottom: -30px;
+}
+
+.colorPicker:active {
+    transform: translateY(4px)
 }
 
 .buttonStyle,
@@ -41,7 +68,7 @@ html {
     font-family: Arial, Helvetica, sans-serif;
     border: 2px solid black;
     border-radius: 20px;
-    background-color: rgb(217, 217, 48);
+    background-color: rgb(241, 153, 76);
     cursor: pointer;
 }
 
@@ -69,3 +96,5 @@ html {
 .show {
     display:block;
 }
+
+
