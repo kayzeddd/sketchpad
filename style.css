@@ -59,7 +59,6 @@ html {
     transform: translateY(4px)
 }
 
-.buttonStyle,
 .dropdownDiv button {
     width: 165px;
     padding: 10px;
@@ -68,16 +67,27 @@ html {
     font-family: Arial, Helvetica, sans-serif;
     border: 2px solid black;
     border-radius: 20px;
+    cursor: pointer;
+}
+
+.buttonStyle {
+    width: 200px;
+    padding: 12px;
+    font-size: 20px;
+    font-weight: 550;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 5px solid rgb(0, 0, 0);
+    border-radius: 15px;
     background-color: rgb(241, 153, 76);
     cursor: pointer;
 }
 
 .buttonStyle:hover {
-    background-color: yellow;
+    background-color: rgb(248, 209, 94);
 }
 
 .buttonStyle:active {
-    background-color: Yellow;
+    background-color: rgb(248, 209, 94);
     transform: translateY(4px);
 }
 
@@ -97,4 +107,30 @@ html {
     display:block;
 }
 
+.colorBlack {
+    color: white;
+    background-color:rgb(0, 0, 0);
+}
 
+.colorRed {
+    background-color: red;
+}
+
+.colorGreen {
+    background-color: green;
+}
+
+.colorBlue {
+    color:rgb(224, 236, 247);
+    background-color: blue;
+}
+
+.colorRainbow {
+    color: rgb(246, 95, 53);
+    background: url(images/rainbow.png);
+}
+
+.colorRandom,
+.colorCustom {
+    background-color: rgb(179, 166, 166);
+}
