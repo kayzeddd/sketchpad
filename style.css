@@ -12,6 +12,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
     column-gap: 100px;;
 }
 
@@ -27,24 +28,12 @@ html {
     border-image: url(./images/frame.jpg) 100 stretch;
 }
 
-.bgColorChange {
-    background-color: rgb(186, 72, 72);
-}
-
-.buttonDiv {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 20px;
-    column-gap: 30px;
-}
-
 .eraser {
     background-color: white;
-    color: #a2435e
 }
 
-.buttonStyle {
+.buttonStyle,
+.dropdownDiv button {
     width: 165px;
     padding: 10px;
     font-size: 16px;
@@ -65,22 +54,6 @@ html {
     transform: translateY(4px);
 }
 
-
-.dropdownDiv button{
-    min-width: 165px;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: 550;
-    font-family: Arial, Helvetica, sans-serif;
-    border: 2px solid black;
-    border-radius: 20px;
-    background-color: rgb(217, 217, 48);
-    cursor: pointer;
-}
-
-.colorPicker {
-    width: 100px;
-}
 
 .diffColors {
     display: none;
