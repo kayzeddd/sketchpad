@@ -1,28 +1,32 @@
 const body = document.querySelector("body");
 body.classList.add("bodyItems")
 
+//Global Variables
 let draw = false;
-containerSize(80,10,80,10);
+let startErase = false;
+let erase = false;
+let rainbow = false;
 
 //prompt button
 const btnDiv = document.createElement("div");
 btnDiv.classList.add("buttonDiv")
 const askUserBtn = document.createElement("button");
 askUserBtn.textContent = "Change Grid Size";
+askUserBtn.classList.add("buttonStyle");
 btnDiv.appendChild(askUserBtn) ;
-body.insertBefore(btnDiv, container) ;
+body.appendChild(btnDiv) ;
 
-btnDiv.addEventListener('click', (e) => userPrompt());
+askUserBtn.addEventListener('click', (e) => userPrompt());
 
 function userPrompt() {
-    let dimensions = prompt("How many squares per side? \n min:10 | max:100", 80);
+    let dimensions = prompt("How many squares per side? \n min:50 | max:120", 100);
     if (dimensions == null){return}
     if (document.contains(document.querySelector(".containerCss"))){
         body.removeChild(document.querySelector(".containerCss"));
         resetToBlack();
         }
-    if (dimensions <= 100 && dimensions >= 10){ 
-        containerSize(dimensions, 10, dimensions, 10);        
+    if (dimensions <= 120 && dimensions >= 50){ 
+        containerSize(dimensions, 8, dimensions, 8);        
     }
     else {
         alert("10 or more and 100 or less")
@@ -34,8 +38,9 @@ function userPrompt() {
 function containerSize(columns,columnSize,rows,rowSize){
 container= document.createElement("div");
 container.classList.add("containerCss");
-container.addEventListener("mousedown", startDraw);
-container.addEventListener("mouseup", stopDraw);
+container.classList.add("borderFrame")
+container.addEventListener("mousedown", start);
+container.addEventListener("mouseup", stop);
 body.appendChild(container);
 container.style.cssText = `grid-template-columns: repeat(${columns}, ${columnSize}px);
                            grid-template-rows: repeat(${rows}, ${rowSize}px);`                        
@@ -46,12 +51,12 @@ for (let i =0; i < boxes.length; i++){
 }
 
 //boxes 
-
 function createDivs(n){
     const boxes =[]; 
     for (let i= 0; i < n; i++){
         boxes[i] = document.createElement("div")
-        boxes[i].addEventListener("mouseover", (e) => randomColor(e))
+        boxes[i].addEventListener("mouseover", (e) => coloring(e))
+        boxes[i].addEventListener("mouseover", (e) => erasing(e))
         boxes[i].addEventListener('dragstart', (e) => {e.preventDefault()})
         boxes[i].addEventListener('drop', (e) => {e.preventDefault()})             
         //boxes[i].classList.add("boxBorder");
@@ -59,31 +64,115 @@ function createDivs(n){
     return boxes;
 }
 
-function startDraw() {
-    draw = true;
+//draw/erase only with 'mousedown'
+function start() {
+    if (startErase == true){
+        erase = true;
+    }
+    else {draw = true;} 
 }
 
-function stopDraw(){
+function stop(){
     draw = false;
+    erase = false;
 }
 
-function coloring(){
-    if (draw == true){
-    let box = this;
-    box.classList.add("bgColorChange"); 
+//Eraser
+const eraserBtn = document.createElement("button");
+eraserBtn.textContent = "Eraser";
+eraserBtn.classList.add("buttonStyle")
+btnDiv.appendChild(eraserBtn);
+eraserBtn.addEventListener('click', eraseOn);
+
+let timesClicked = 0;
+
+function eraseOn() {
+    if (timesClicked > 0) {
+        startErase = false;
+        eraserBtn.textContent = "Eraser";
+        timesClicked = 0;
+    }
+    else if (timesClicked == 0){
+        startErase = true;
+        eraserBtn.textContent = "Stop Erasing";
+        timesClicked ++;
+    }    
+}
+
+function erasing(e) {
+    if (erase == true) {
+        let box = e.target;
+        box.style.cssText= "background-color: white;";
     }
 }
 
-//Same color per box
-function color(e){
+
+//color picker drop down menu
+const dropdownDiv = document.querySelector(".dropdownDiv");
+btnDiv.insertBefore(dropdownDiv,eraserBtn);
+const colorPicker = document.querySelector(".colorPicker");
+const menu = document.querySelector("#dropdownMenu");
+colorPicker.addEventListener("click", show)
+
+function show() {
+    menu.classList.toggle("show");
+}
+
+window.onclick = (e) => {
+    if (e.target != colorPicker) {
+        let dropdownMenu = document.querySelector(".diffColors");
+        if (dropdownMenu.classList.contains("show")){
+            dropdownMenu.classList.remove("show");
+        }
+    }
+}
+
+const colorBlack = document.querySelector(".colorBlack");
+colorBlack.addEventListener("click", (e) => {color = "black"; rainbow =false});
+const colorRed = document.querySelector(".colorRed");
+colorRed.addEventListener("click", (e) => {color = "Red" ; rainbow =false}) ;
+const colorGreen = document.querySelector(".colorGreen");
+colorGreen.addEventListener("click", (e) => {color = "Green" ; rainbow =false});
+const colorBlue = document.querySelector(".colorBlue");
+colorBlue.addEventListener("click", (e) => {color = "Blue" ; rainbow =false});
+const colorRainbow = document.querySelector(".colorRainbow");
+colorRainbow.addEventListener("click", (e) => rainbow = true);
+const colorRandom = document.querySelector(".colorRandom");
+colorRandom.addEventListener("click", random);
+const colorCustom = document.querySelector(".colorCustom");
+colorCustom.addEventListener("click", customize)
+
+function customize(){
+    rainbow =false
+    let colorPrompt = prompt("Enter Hex RGB Value (no space between)\nEx: #5F9EA0", '#')
+    color = colorPrompt;
+}
+
+function random() {
+    rainbow =false
+    color = `rgb(${randomize()}, ${randomize()}, ${randomize()})`
+    return color
+}
+
+
+//one color
+let color="black";
+
+function coloring(e){
     let box = e.target;
-    box.classList.add("bgColorChange"); 
+    if (draw == true){
+        if (rainbow == true){
+            rainbowColor(e)
+        }
+    else {box.style.cssText= `background-color: ${color}`; }
     }
+}
 
-//Different color per box
-function randomColor(e){
+//Different colors per box
+function rainbowColor(e){
     //console.log(`background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`)
     if (draw == true){
+        console.log(e.target)
     let box = e.target;
     box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;
     }
@@ -93,7 +182,7 @@ function randomize(){
     return Math.floor(Math.random()*256);
 }
 
-//Turn to black after 'x' passes
+//Color turns to black after 'x' passes
 let x = 1000;
 let pass= 0;
 let r = randomize();
@@ -127,3 +216,7 @@ function resetToBlack(){
     tenPercentB= (b/x);
     initialColor = `background-color: rgb(${r}, ${g}, ${b})`;
 }
+
+
+//Grid on load
+containerSize(100,8,100,8);
