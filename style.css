@@ -8,6 +8,13 @@ html {
     height: 90vh;
 }
 
+.btnDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 100px;;
+}
+
 .containerCss {
     display:grid;
     align-self: center;

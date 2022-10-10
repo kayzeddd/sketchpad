@@ -1,5 +1,6 @@
 const body = document.querySelector("body");
-body.classList.add("bodyItems")
+//body.classList.add("bodyItems")
+const btnDiv = document.querySelector(".btnDiv")
 
 //Global Variables
 let draw = false;
@@ -8,14 +9,15 @@ let erase = false;
 let rainbow = false;
 
 //prompt button
-const btnDiv = document.createElement("div");
-btnDiv.classList.add("buttonDiv")
-const askUserBtn = document.createElement("button");
-askUserBtn.textContent = "Change Grid Size";
-askUserBtn.classList.add("buttonStyle");
-btnDiv.appendChild(askUserBtn) ;
-body.appendChild(btnDiv) ;
+//const btnDiv = document.createElement("div");
+//btnDiv.classList.add("buttonDiv")
+//const askUserBtn = document.createElement("button");
+//askUserBtn.textContent = "Change Grid Size";
+//askUserBtn.classList.add("buttonStyle");
+//btnDiv.appendChild(askUserBtn) ;
+//body.appendChild(btnDiv) ;
 
+const askUserBtn = document.querySelector(".buttonStyle")
 askUserBtn.addEventListener('click', (e) => userPrompt());
 
 function userPrompt() {
@@ -78,10 +80,12 @@ function stop(){
 }
 
 //Eraser
-const eraserBtn = document.createElement("button");
-eraserBtn.textContent = "Eraser";
-eraserBtn.classList.add("buttonStyle")
-btnDiv.appendChild(eraserBtn);
+//const eraserBtn = document.createElement("button");
+//eraserBtn.textContent = "Eraser";
+//eraserBtn.classList.add("buttonStyle")
+//btnDiv.appendChild(eraserBtn);
+
+const eraserBtn = document.querySelector(".eraserBtn")
 eraserBtn.addEventListener('click', eraseOn);
 
 let timesClicked = 0;
