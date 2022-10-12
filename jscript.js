@@ -1,22 +1,18 @@
 const body = document.querySelector("body");
-//body.classList.add("bodyItems")
 const btnDiv = document.querySelector(".btnDiv")
+
+
+
+
 
 //Global Variables
 let draw = false;
 let startErase = false;
 let erase = false;
 let rainbow = false;
+let color="black"
 
 //prompt button
-//const btnDiv = document.createElement("div");
-//btnDiv.classList.add("buttonDiv")
-//const askUserBtn = document.createElement("button");
-//askUserBtn.textContent = "Change Grid Size";
-//askUserBtn.classList.add("buttonStyle");
-//btnDiv.appendChild(askUserBtn) ;
-//body.appendChild(btnDiv) ;
-
 const askUserBtn = document.querySelector(".buttonStyle")
 askUserBtn.addEventListener('click', (e) => userPrompt());
 
@@ -43,6 +39,7 @@ container.classList.add("containerCss");
 container.classList.add("borderFrame")
 container.addEventListener("mousedown", start);
 container.addEventListener("mouseup", stop);
+//container.addEventListener("click", (e) => {console.log(`container:${e.clientX}, ${e.clientY}`)})
 body.appendChild(container);
 container.style.cssText = `grid-template-columns: repeat(${columns}, ${columnSize}px);
                            grid-template-rows: repeat(${rows}, ${rowSize}px);`                        
@@ -57,11 +54,10 @@ function createDivs(n){
     const boxes =[]; 
     for (let i= 0; i < n; i++){
         boxes[i] = document.createElement("div")
-        boxes[i].addEventListener("mouseover", (e) => coloring(e))
+        boxes[i].addEventListener("mouseover", (e) => coloring3(e))
         boxes[i].addEventListener("mouseover", (e) => erasing(e))
         boxes[i].addEventListener('dragstart', (e) => {e.preventDefault()})
         boxes[i].addEventListener('drop', (e) => {e.preventDefault()})             
-        //boxes[i].classList.add("boxBorder");
     }
     return boxes;
 }
@@ -80,11 +76,6 @@ function stop(){
 }
 
 //Eraser
-//const eraserBtn = document.createElement("button");
-//eraserBtn.textContent = "Eraser";
-//eraserBtn.classList.add("buttonStyle")
-//btnDiv.appendChild(eraserBtn);
-
 const eraserBtn = document.querySelector(".eraserBtn")
 eraserBtn.addEventListener('click', eraseOn);
 
@@ -93,12 +84,13 @@ let timesClicked = 0;
 function eraseOn() {
     if (timesClicked > 0) {
         startErase = false;
-        eraserBtn.textContent = "Eraser";
+        eraserBtn.classList.remove("eraserOn");
         timesClicked = 0;
     }
     else if (timesClicked == 0){
         startErase = true;
-        eraserBtn.textContent = "Stop Erasing";
+        eraserBtn.classList.add("eraserOn");
+        colorPicker.classList.remove("coloringOn")
         timesClicked ++;
     }    
 }
@@ -112,13 +104,15 @@ function erasing(e) {
 
 
 //color picker drop down menu
-const dropdownDiv = document.querySelector(".dropdownDiv");
-btnDiv.insertBefore(dropdownDiv,eraserBtn);
 const colorPicker = document.querySelector(".colorPicker");
 const menu = document.querySelector("#dropdownMenu");
 colorPicker.addEventListener("click", show)
 
 function show() {
+    startErase = false;
+    timesClicked = 0;
+    colorPicker.classList.add("coloringOn")
+    eraserBtn.classList.remove("eraserOn");
     menu.classList.toggle("show");
 }
 
@@ -159,9 +153,7 @@ function random() {
 }
 
 
-//one color
-let color="black";
-
+//coloring div;
 function coloring(e){
     let box = e.target;
     if (draw == true){
@@ -170,6 +162,74 @@ function coloring(e){
         }
     else {box.style.cssText= `background-color: ${color}`; }
     }
+}
+
+//coloring div size 2;
+function coloring2(e) {
+    if (draw == true) {
+    let x = e.clientX - 8;
+    let y = e.clientY - 8;
+    for (let i = 0; i < 3; i += 1) {
+        if (i == 0){
+            for (let z = 0; z < 3; z++){
+            let box = document.elementFromPoint(x + (8 * z),y);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+        if (i == 1){
+            for (let z = 0; z < 3; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 8);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+        if (i == 2){
+            for (let z = 0; z < 3; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 16);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+    }
+}
+}
+
+//coloring div size 3;
+function coloring3(e) {
+    if (draw == true) {
+    let x = e.clientX - 16;
+    let y = e.clientY - 16;
+    for (let i = 0; i < 5; i += 1) {
+        if (i == 0){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+        if (i == 1){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 8);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+        if (i == 2){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 16);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+        if (i == 3){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 24);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+        if (i == 4){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 32);
+            box.style.cssText = `background-color: ${color}`;
+        }  
+        }
+    }
+}
 }
 
 //Different colors per box

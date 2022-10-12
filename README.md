@@ -10,3 +10,6 @@ https://pixabay.com/illustrations/painting-knight-oil-painting-moon-3995999/
 
 -Eraser button: Dimuth Amarasiri | @Blue-Hat-Graphics | pixabay.com
 https://pixabay.com/illustrations/eraser-icon-flat-rubber-education-7485771/
+
+-Paint/brushes icon: Monika Grafik | @maciej326 | pixabay.com
+https://pixabay.com/illustrations/paints-brushes-the-palette-painting-1945856/

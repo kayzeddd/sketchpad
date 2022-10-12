@@ -2,7 +2,7 @@ html {
     background-image: url(./images/painting-background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    height: 120vh;
 }
 
 .bodyItems{
@@ -32,31 +32,53 @@ html {
     border-image: url(./images/frame.jpg) 100 stretch;
     cursor: crosshair;
 }
-
+.eraserDiv {
+    width: 141px;
+}
 .eraserBtn {
     width: 125px;
     height: auto; 
     cursor: pointer;
+    border: 20px hidden;
 }
 
 .eraserBtn:active {
     transform: translateY(4px)
 }
 
+.eraserOn {
+    border: 5px dashed rgb(194, 194, 77);
+    border-radius: 30px;
+}
+
 .eraser {
     background-color: white;
 }
 
+.dropdownDiv {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 229px;
+    min-height: 151px;
+    margin-top: -20px;
+    margin-bottom: -15px;
+    position: relative;
+}
+
 .colorPicker {
-    width: 210px;
+    width: 200px;
     height: auto;
     cursor: pointer;
-    margin-top: -25px;
-    margin-bottom: -30px;
 }
 
 .colorPicker:active {
     transform: translateY(4px)
+}
+
+.coloringOn {
+    border: 5px dashed rgb(194, 194, 77);
+    border-radius: 30px;
 }
 
 .dropdownDiv button {
@@ -94,8 +116,8 @@ html {
 
 .diffColors {
     display: none;
-    position:absolute;
-    z-index: 1;
+    position: absolute;
+    top: 80px;
 }
 
 .diffColors button {
