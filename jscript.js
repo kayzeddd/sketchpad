@@ -6,12 +6,13 @@ let draw = false;
 let startErase = false;
 let erase = false;
 let rainbow = false;
-let color="black";
-let brushSize= 1;
-let eraserSize= 1;
+let color ="black";
+let brushSize = 1;
+let eraserSize = 1;
+let canvasColor= "white";
 
-//prompt button
-const askUserBtn = document.querySelector(".buttonStyle")
+//canvas size prompt button
+const askUserBtn = document.querySelector(".buttonStyle");
 askUserBtn.addEventListener('click', (e) => userPrompt());
 
 function userPrompt() {
@@ -26,37 +27,55 @@ function userPrompt() {
         resetToBlack();
         }
     if (dimensions <= 120 && dimensions >= 50){ 
-        containerSize(dimensions, 8, dimensions, 8);        
+        containerSize(dimensions, 8, dimensions, 8, canvasColor);        
     }
 }
 
+//canvas color prompt button
+const askCanvasColor = document.querySelector(".canvasBtn");
+askCanvasColor.addEventListener("click", getCanvasColor)
+
+function getCanvasColor() {
+    let askColor = prompt("Canvas Color in Hex RGB value (no space between / without '#')\nEx: 3A7E40");
+    let re = /[0-9A-Fa-f]{6}/g;
+    if (re.test(askColor)) {
+        console.log(`#${askColor}`)
+        canvasColor = `#${askColor}`
+        if (document.contains(document.querySelector(".containerCss"))){
+            body.removeChild(document.querySelector(".containerCss"));
+            resetToBlack();
+            }
+        containerSize(100, 8, 100, 8, canvasColor)
+    }
+    else {alert("invalid Hex value, try again")}
+}
 
 //container/grid
-function containerSize(columns,columnSize,rows,rowSize){
+function containerSize(columns, columnSize, rows, rowSize, canvasColor){
 container= document.createElement("div");
 container.classList.add("containerCss");
 container.classList.add("borderFrame")
 container.addEventListener("mousedown", start);
 container.addEventListener("mouseup", stop);
-//container.addEventListener("click", (e) => {console.log(`container:${e.clientX}, ${e.clientY}`)})
 body.appendChild(container);
 container.style.cssText = `grid-template-columns: repeat(${columns}, ${columnSize}px);
                            grid-template-rows: repeat(${rows}, ${rowSize}px);`                        
-let boxes = createDivs(columns*rows)
+let boxes = createDivs(columns*rows, canvasColor)
 for (let i =0; i < boxes.length; i++){
     container.appendChild(boxes[i]);
 }
 }
 
 //boxes 
-function createDivs(n){
+function createDivs(n, canvasColor){
     const boxes =[]; 
     for (let i= 0; i < n; i++){
-        boxes[i] = document.createElement("div")
-        boxes[i].addEventListener("mouseover", (e) => useSizeColor(e))
-        boxes[i].addEventListener("mouseover", (e) => useSizeEraser(e))
-        boxes[i].addEventListener('dragstart', (e) => {e.preventDefault()})
-        boxes[i].addEventListener('drop', (e) => {e.preventDefault()})             
+        boxes[i] = document.createElement("div");
+        boxes[i].addEventListener("mouseover", (e) => useSizeColor(e));
+        boxes[i].addEventListener("mouseover", (e) => useSizeEraser(e));
+        boxes[i].addEventListener('dragstart', (e) => {e.preventDefault()});
+        boxes[i].addEventListener('drop', (e) => {e.preventDefault()});
+        boxes[i].style.cssText = `background-color: ${canvasColor}`         
     }
     return boxes;
 }
@@ -82,13 +101,6 @@ function eraseOn() {
     startErase = true;
     eraserBtn.classList.add("eraserOn");
     colorPicker.classList.remove("coloringOn")
-}
-
-function erasing(e) {
-    if (erase == true) {
-        let box = e.target;
-        box.style.cssText= "background-color: white;";
-    }
 }
 
 //Eraser drop down menu
@@ -145,8 +157,13 @@ colorCustom.addEventListener("click", customize)
 
 function customize(){
     rainbow =false
-    let colorPrompt = prompt("Enter Hex RGB Value (no space between)\nEx: #5F9EA0", '#')
-    color = colorPrompt;
+    let colorPrompt = prompt("Enter Hex RGB Value (no space between / without '#')\nEx: 5F9EA0");
+    let re = /[0-9A-Fa-f]{6}/g;
+    if (re.test(colorPrompt)) {
+        console.log(`#${colorPrompt}`)
+        color = `#${colorPrompt}`
+    }
+    else {alert("invalid Hex value, try again")}
 }
 
 function random() {
@@ -292,7 +309,7 @@ function useSizeEraser(e){
 function erasing(e){
     let box = e.target;
     if (erase == true){
-    {box.style.cssText= `background-color: white`; }
+    {box.style.cssText= `background-color: ${canvasColor}`; }
     }
 }
 
@@ -305,19 +322,19 @@ function erasing2(e) {
         if (i == 0){
             for (let z = 0; z < 3; z++){
             let box = document.elementFromPoint(x + (8 * z),y);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
         if (i == 1){
             for (let z = 0; z < 3; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 8);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
         if (i == 2){
             for (let z = 0; z < 3; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 16);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
     }
@@ -333,31 +350,31 @@ function erasing3(e) {
         if (i == 0){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
         if (i == 1){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 8);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
         if (i == 2){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 16);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
         if (i == 3){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 24);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
         if (i == 4){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 32);
-            box.style.cssText = `background-color: white`;
+            box.style.cssText = `background-color: ${canvasColor}`;
         }  
         }
     }
@@ -416,4 +433,4 @@ function resetToBlack(){
 
 
 //Grid on load
-containerSize(100,8,100,8);
+containerSize(100,8,100,8, canvasColor);
