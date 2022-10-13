@@ -38,6 +38,7 @@ askCanvasColor.addEventListener("click", getCanvasColor)
 function getCanvasColor() {
     let askColor = prompt("Canvas Color in Hex RGB value (no space between / without '#')\nEx: 3A7E40");
     let re = /[0-9A-Fa-f]{6}/g;
+    if (askColor == null){return}
     if (re.test(askColor)) {
         console.log(`#${askColor}`)
         canvasColor = `#${askColor}`
@@ -52,18 +53,18 @@ function getCanvasColor() {
 
 //container/grid
 function containerSize(columns, columnSize, rows, rowSize, canvasColor){
-container= document.createElement("div");
-container.classList.add("containerCss");
-container.classList.add("borderFrame")
-container.addEventListener("mousedown", start);
-container.addEventListener("mouseup", stop);
-body.appendChild(container);
-container.style.cssText = `grid-template-columns: repeat(${columns}, ${columnSize}px);
-                           grid-template-rows: repeat(${rows}, ${rowSize}px);`                        
-let boxes = createDivs(columns*rows, canvasColor)
-for (let i =0; i < boxes.length; i++){
-    container.appendChild(boxes[i]);
-}
+    container= document.createElement("div");
+    container.classList.add("containerCss");
+    container.classList.add("borderFrame")
+    container.addEventListener("mousedown", start);
+    container.addEventListener("mouseup", stop);
+    body.appendChild(container);
+    container.style.cssText = `grid-template-columns: repeat(${columns}, ${columnSize}px);
+                            grid-template-rows: repeat(${rows}, ${rowSize}px);`                        
+    let boxes = createDivs(columns*rows, canvasColor)
+    for (let i =0; i < boxes.length; i++){
+        container.appendChild(boxes[i]);
+    }
 }
 
 //boxes 
@@ -159,6 +160,7 @@ function customize(){
     rainbow =false
     let colorPrompt = prompt("Enter Hex RGB Value (no space between / without '#')\nEx: 5F9EA0");
     let re = /[0-9A-Fa-f]{6}/g;
+    if (colorPrompt == null) {return};
     if (re.test(colorPrompt)) {
         console.log(`#${colorPrompt}`)
         color = `#${colorPrompt}`
@@ -206,7 +208,10 @@ function coloring(e){
         if (rainbow == true){
             rainbowColor(e)
         }
-    else {box.style.cssText= `background-color: ${color}`; }
+    else {
+        if (rainbow == true) {box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+        else {box.style.cssText= `background-color: ${color}`; }
+    }
     }
 }
 
@@ -219,19 +224,28 @@ function coloring2(e) {
         if (i == 0){
             for (let z = 0; z < 3; z++){
             let box = document.elementFromPoint(x + (8 * z),y);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
         if (i == 1){
             for (let z = 0; z < 3; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 8);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
         if (i == 2){
             for (let z = 0; z < 3; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 16);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
     }
@@ -247,31 +261,46 @@ function coloring3(e) {
         if (i == 0){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
         if (i == 1){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 8);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
         if (i == 2){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 16);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
         if (i == 3){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 24);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
         if (i == 4){
             for (let z = 0; z < 5; z++){
             let box = document.elementFromPoint(x + (8 * z),y + 32);
-            box.style.cssText = `background-color: ${color}`;
+            if (rainbow == true) {
+                box.style.cssText = `background-color: rgb(${randomize()}, ${randomize()}, ${randomize()})`;}
+            else {
+                box.style.cssText= `background-color: ${color}`; }
         }  
         }
     }
