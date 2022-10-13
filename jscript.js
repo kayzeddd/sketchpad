@@ -1,16 +1,14 @@
 const body = document.querySelector("body");
 const btnDiv = document.querySelector(".btnDiv")
 
-
-
-
-
 //Global Variables
 let draw = false;
 let startErase = false;
 let erase = false;
 let rainbow = false;
-let color="black"
+let color="black";
+let brushSize= 1;
+let eraserSize= 1;
 
 //prompt button
 const askUserBtn = document.querySelector(".buttonStyle")
@@ -19,15 +17,16 @@ askUserBtn.addEventListener('click', (e) => userPrompt());
 function userPrompt() {
     let dimensions = prompt("Enter Canvas Size \n min:50 | max:120", 100);
     if (dimensions == null){return}
+    if (dimensions < 50 || dimensions > 120){
+        alert("50 or more and 120 or less")
+        return
+    }
     if (document.contains(document.querySelector(".containerCss"))){
         body.removeChild(document.querySelector(".containerCss"));
         resetToBlack();
         }
     if (dimensions <= 120 && dimensions >= 50){ 
         containerSize(dimensions, 8, dimensions, 8);        
-    }
-    else {
-        alert("50 or more and 120 or less")
     }
 }
 
@@ -54,8 +53,8 @@ function createDivs(n){
     const boxes =[]; 
     for (let i= 0; i < n; i++){
         boxes[i] = document.createElement("div")
-        boxes[i].addEventListener("mouseover", (e) => coloring3(e))
-        boxes[i].addEventListener("mouseover", (e) => erasing(e))
+        boxes[i].addEventListener("mouseover", (e) => useSizeColor(e))
+        boxes[i].addEventListener("mouseover", (e) => useSizeEraser(e))
         boxes[i].addEventListener('dragstart', (e) => {e.preventDefault()})
         boxes[i].addEventListener('drop', (e) => {e.preventDefault()})             
     }
@@ -79,20 +78,10 @@ function stop(){
 const eraserBtn = document.querySelector(".eraserBtn")
 eraserBtn.addEventListener('click', eraseOn);
 
-let timesClicked = 0;
-
 function eraseOn() {
-    if (timesClicked > 0) {
-        startErase = false;
-        eraserBtn.classList.remove("eraserOn");
-        timesClicked = 0;
-    }
-    else if (timesClicked == 0){
-        startErase = true;
-        eraserBtn.classList.add("eraserOn");
-        colorPicker.classList.remove("coloringOn")
-        timesClicked ++;
-    }    
+    startErase = true;
+    eraserBtn.classList.add("eraserOn");
+    colorPicker.classList.remove("coloringOn")
 }
 
 function erasing(e) {
@@ -102,29 +91,43 @@ function erasing(e) {
     }
 }
 
+//Eraser drop down menu
+const eraserMenu = document.querySelector(".eraserMenu");
+eraserBtn.addEventListener("click", eraserShow);
 
-//color picker drop down menu
+function eraserShow() {
+    eraserMenu.classList.toggle("show");
+}
+
+//color picker / size picker / eraser picker drop down menu
 const colorPicker = document.querySelector(".colorPicker");
-const menu = document.querySelector("#dropdownMenu");
-colorPicker.addEventListener("click", show)
+const sizePicker = document.querySelector(".diffSizes");
+const menu = document.querySelector(".dropdownMenu1");
+const menu2 = document.querySelector(".dropdownMenu2");
+
+colorPicker.addEventListener("click", show);
 
 function show() {
     startErase = false;
     timesClicked = 0;
-    colorPicker.classList.add("coloringOn")
+    colorPicker.classList.add("coloringOn");
     eraserBtn.classList.remove("eraserOn");
     menu.classList.toggle("show");
+    menu2.classList.toggle("show");
 }
 
+//close menus if 'click' is not on colorPicker or eraserBtn
 window.onclick = (e) => {
-    if (e.target != colorPicker) {
-        let dropdownMenu = document.querySelector(".diffColors");
-        if (dropdownMenu.classList.contains("show")){
-            dropdownMenu.classList.remove("show");
+    if (e.target != colorPicker && e.target != eraserBtn) {
+        if (menu.classList.contains("show") || menu2.classList.contains("show") || eraserMenu.classList.contains("show")){
+            menu.classList.remove("show");
+            menu2.classList.remove("show");
+            eraserMenu.classList.remove("show");
         }
     }
 }
 
+//color picker buttons
 const colorBlack = document.querySelector(".colorBlack");
 colorBlack.addEventListener("click", (e) => {color = "black"; rainbow =false});
 const colorRed = document.querySelector(".colorRed");
@@ -152,8 +155,34 @@ function random() {
     return color
 }
 
+//brush size picker
+const brush1 = document.querySelector(".brush1");
+brush1.addEventListener("click", size);
+const brush2 = document.querySelector(".brush2");
+brush2.addEventListener("click", size);
+const brush3 = document.querySelector(".brush3");
+brush3.addEventListener("click", size);
 
-//coloring div;
+function size(e) {
+    if (e.target.classList == "brush1"){
+        brushSize = 1;
+    }
+    if (e.target.classList == "brush2"){
+        brushSize = 2;
+    }
+    if (e.target.classList == "brush3"){
+        brushSize = 3;
+    }
+}
+
+//color/size function
+function useSizeColor(e){
+    if (brushSize == 1){coloring(e)};
+    if(brushSize == 2){coloring2(e)};
+    if (brushSize == 3){coloring3(e)};
+}
+
+//coloring div size 1;
 function coloring(e){
     let box = e.target;
     if (draw == true){
@@ -231,6 +260,110 @@ function coloring3(e) {
     }
 }
 }
+
+//eraser size picker
+const eraser1 = document.querySelector(".eraser1");
+eraser1.addEventListener("click", sizeEraser);
+const eraser2 = document.querySelector(".eraser2");
+eraser2.addEventListener("click", sizeEraser);
+const eraser3 = document.querySelector(".eraser3");
+eraser3.addEventListener("click", sizeEraser);
+
+function sizeEraser(e) {
+    if (e.target.classList == "eraser1"){
+        eraserSize = 1;
+    }
+    if (e.target.classList == "eraser2"){
+        eraserSize = 2;
+    }
+    if (e.target.classList == "eraser3"){
+        eraserSize = 3;
+    }
+}
+
+//color/size function
+function useSizeEraser(e){
+    if (eraserSize == 1){erasing(e)};
+    if(eraserSize == 2){erasing2(e)};
+    if (eraserSize == 3){erasing3(e)};
+}
+
+//eraser size 1
+function erasing(e){
+    let box = e.target;
+    if (erase == true){
+    {box.style.cssText= `background-color: white`; }
+    }
+}
+
+//eraser size 2;
+function erasing2(e) {
+    if (erase == true) {
+    let x = e.clientX - 8;
+    let y = e.clientY - 8;
+    for (let i = 0; i < 3; i += 1) {
+        if (i == 0){
+            for (let z = 0; z < 3; z++){
+            let box = document.elementFromPoint(x + (8 * z),y);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+        if (i == 1){
+            for (let z = 0; z < 3; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 8);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+        if (i == 2){
+            for (let z = 0; z < 3; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 16);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+    }
+}
+}
+
+//eraser size 3;
+function erasing3(e) {
+    if (erase == true) {
+    let x = e.clientX - 16;
+    let y = e.clientY - 16;
+    for (let i = 0; i < 5; i += 1) {
+        if (i == 0){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+        if (i == 1){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 8);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+        if (i == 2){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 16);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+        if (i == 3){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 24);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+        if (i == 4){
+            for (let z = 0; z < 5; z++){
+            let box = document.elementFromPoint(x + (8 * z),y + 32);
+            box.style.cssText = `background-color: white`;
+        }  
+        }
+    }
+}
+}
+
 
 //Different colors per box
 function rainbowColor(e){

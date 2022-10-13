@@ -81,13 +81,14 @@ html {
     border-radius: 30px;
 }
 
-.dropdownDiv button {
-    width: 165px;
+.dropdownDiv button,
+.eraserMenu button {
+    min-width: 165px;
     padding: 10px;
     font-size: 16px;
     font-weight: 550;
     font-family: Arial, Helvetica, sans-serif;
-    border: 2px solid black;
+    border: 3px solid black;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -118,11 +119,35 @@ html {
     display: none;
     position: absolute;
     top: 80px;
+    left: -50px;
 }
 
 .diffColors button {
     display: block;
     min-width: 165px;
+}
+
+.diffSizes {
+    display: none;
+    position: absolute;
+    top: 80px;
+    left: 115px;
+}
+
+.diffSizes button {
+    display: block;
+    min-width: 165px;
+}
+.eraserDiv {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.eraserMenu {
+    display: none;
+    position: absolute;
+    top: 40px;
 }
 
 .show {
